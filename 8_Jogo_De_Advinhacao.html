@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Adivinhação</title>
+</head>
+<body>
+    <h2>Jogo de Adivinhação</h2>
+    <input type="number" id="chute" placeholder="Digite seu chute">
+    <button onclick="tentar()">Tentar</button>
+    <div id="resultado"></div>
+
+    <script>
+        let numeroAleatorio = Math.round(Math.random() * 100);
+        let tentativas = 0;
+
+        function tentar() {
+            const chute = parseInt(document.getElementById("chute").value);
+            tentativas++;
+
+            if (chute < numeroAleatorio) {
+                document.getElementById("resultado").innerText = "Tente um número maior!";
+            } else if (chute > numeroAleatorio) {
+                document.getElementById("resultado").innerText = "Tente um número menor!";
+            } else {
+                document.getElementById("resultado").innerText = `Parabéns! Você acertou em ${tentativas} tentativas.`;
+                if (confirm("Deseja jogar novamente?")) {
+                    numeroAleatorio = Math.round(Math.random() * 100);
+                    tentativas = 0;
+                    document.getElementById("resultado").innerText = "";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

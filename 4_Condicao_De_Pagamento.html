@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condição de Pagamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        fieldset {
+            border: 2px solid #333;
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #fff;
+        }
+        legend {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        label, select, input[type="number"], input[type="text"] {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .resultado {
+            margin-top: 15px;
+        }
+        .tabela-pagamento {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .tabela-pagamento th, .tabela-pagamento td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        .tabela-pagamento th {
+            background-color: #0073e6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form id="formPagamento">
+        <fieldset>
+            <legend>Condição de Pagamento</legend>
+            <label>Preço do Produto:
+                <input type="number" id="precoProduto" step="0.01">
+            </label>
+            <label>Escolha a Condição de Pagamento:
+                <select id="codigoCondicao">
+                    <option value="1">À vista 10% de desconto</option>
+                    <option value="2">Cartão 5% de desconto</option>
+                    <option value="3">Parcelado 10% de aumento</option>
+                </select>
+            </label>
+            <button type="button" onclick="calcularValor()">Calcular</button>
+            <div class="resultado">
+                <label>Valor Original: <input type="text" id="valorOriginal" readonly></label>
+                <label>Valor Final: <input type="text" id="valorFinal" readonly></label>
+            </div>
+            <table class="tabela-pagamento">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Condições de pagamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>À vista 10% de desconto</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Cartão 5% de desconto</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Parcelado 10% de aumento</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </form>
+
+    <script>
+        function calcularValor() {
+            const preco = parseFloat(document.getElementById("precoProduto").value);
+            const condicao = document.getElementById("codigoCondicao").value;
+            let valorFinal = 0;
+
+            if (isNaN(preco)) {
+                alert("Por favor, insira um preço válido.");
+                return;
+            }
+
+            if (condicao === "1") {
+                valorFinal = preco * 0.90;
+            } else if (condicao === "2") {
+                valorFinal = preco * 0.95;
+            } else if (condicao === "3") {
+                valorFinal = preco * 1.10;
+            }
+
+            document.getElementById("valorOriginal").value = `R$ ${preco.toFixed(2)}`;
+            document.getElementById("valorFinal").value = `R$ ${valorFinal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

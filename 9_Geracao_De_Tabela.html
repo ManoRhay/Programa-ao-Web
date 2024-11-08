@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geração de Tabela</title>
+</head>
+<body>
+    <h2>Gerar Tabela</h2>
+    <button onclick="gerarTabela()">Clique para gerar a tabela</button>
+    <div id="tabela"></div>
+
+    <script>
+        function gerarTabela() {
+            const linhas = prompt("Digite o número de linhas:");
+            const colunas = prompt("Digite o número de colunas:");
+            let tabelaHTML = "<table>";
+
+            for (let i = 0; i < linhas; i++) {
+                tabelaHTML += "<tr>";
+                for (let j = 0; j < colunas; j++) {
+                    const corDeFundo = (j % 2 === 0) ? "green" : "yellow";
+                    tabelaHTML += `<td style="background-color: ${corDeFundo}; color: black; padding: 10px;">(${i + 1},${j + 1})</td>`;
+                }
+                tabelaHTML += "</tr>";
+            }
+            tabelaHTML += "</table>";
+            document.getElementById("tabela").innerHTML = tabelaHTML;
+        }
+    </script>
+</body>
+</html>

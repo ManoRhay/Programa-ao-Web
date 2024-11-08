@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Três Abas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #343a40;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .tab-link {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .tab-link.active {
+            background-color: #eee;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #slideshow-img {
+            width: 30%;  /* Ajustando a largura da imagem */
+            height: auto;
+            margin: 0 auto;  /* Centraliza a imagem no contêiner */
+            display: block;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="tabs">
+            <li class="tab-link active" data-tab="tab-cronometro">Cronômetro</li>
+            <li class="tab-link" data-tab="tab-slideshow">Slide Show</li>
+            <li class="tab-link" data-tab="tab-tabuada">Tabuada</li>
+        </ul>
+        <div id="tab-cronometro" class="tab-content active">
+            <div id="cronometro-display">0</div>
+        </div>
+        <div id="tab-slideshow" class="tab-content">
+            <button id="prev">Anterior</button>
+            <img id="slideshow-img" src="img1.jpg" alt="Imagem 1">
+            <button id="next">Próximo</button>
+        </div>
+        <div id="tab-tabuada" class="tab-content">
+            <input type="number" id="numero">
+            <button id="calcular">Calcular</button>
+            <div id="resultado"></div>
+        </div>
+    </div>
+
+    <script>
+        const cronometroDisplay = document.getElementById('cronometro-display');
+        let segundos = 0;
+
+        function atualizarCronometro() {
+            segundos++;
+            cronometroDisplay.textContent = segundos;
+        }
+
+        setInterval(atualizarCronometro, 1000);
+
+        // Lógica para o carrossel de slide show
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const slideshowImg = document.getElementById('slideshow-img');
+        const images = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg', 'img5.jpg']; // As imagens para o carrossel
+        let currentImageIndex = 0;
+
+        function updateSlideshow() {
+            slideshowImg.src = images[currentImageIndex];
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateSlideshow();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateSlideshow();
+        });
+
+        // Lógica para a tabuada
+        const numeroInput = document.getElementById('numero');
+        const calcularButton = document.getElementById('calcular');
+        const resultadoDiv = document.getElementById('resultado');
+
+        calcularButton.addEventListener('click', () => {
+            const numero = numeroInput.value;
+            let resultado = '';
+            for (let i = 1; i <= 10; i++) {
+                resultado += `${numero} x ${i} = ${numero * i}<br>`;
+            }
+            resultadoDiv.innerHTML = resultado;
+        });
+
+        // Lógica para as abas
+        const tabs = document.querySelectorAll('.tab-link');
+        const tabContent = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                tabs.forEach(tab => tab.classList.remove('active'));
+                tabContent.forEach(content => content.classList.remove('active'));
+                tab.classList.add('active');   
+
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
